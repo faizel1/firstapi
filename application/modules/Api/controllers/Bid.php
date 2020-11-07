@@ -14,22 +14,23 @@ class Bid extends REST_Controller {
 
        parent::__construct();
 
-       $this->load->database();
+       $this->load->model('ApiModel');
 
     }
 
        
-//REST_Controller::HTTP_OK
+
 
     public function index_get($id = null)
     {
         if(!is_null($id)){
 
-            $data = $this->db->get_where("bidders", ['id' => $id])->row();
+            $data = $this->ApiModel->getonedata(['id' => $id],'bidders');
+            
 
         }else{
 
-            $data = $this->db->get("bidders")->result();
+            $data = $this->ApiModel->getdata("bidders");
 
         }
 
@@ -44,13 +45,13 @@ class Bid extends REST_Controller {
 
     {
 
-        $input = $this->input->post();
+        $input = $this->post();
 
-        $this->db->insert('bidders',$input);
+        $this->ApiModel->adddata('bidders',$input);
 
      
 
-        $this->response(['BID created successfully.'], 200);
+        $this->response(['Bid created successfully.'], 200);
 
     } 
 
@@ -62,11 +63,11 @@ class Bid extends REST_Controller {
 
         $input = $this->put();
 
-        $this->db->update('bidders', $input, array('id'=>$id));
+        $this->ApiModel->updatedata($input, array('id'=>$id),'bidders');
 
      
 
-        $this->response(['BID updated successfully.'], 200);
+        $this->response(['Bid updated successfully.'], 200);
 
     }
 
@@ -75,11 +76,11 @@ class Bid extends REST_Controller {
 
     {
 
-        $this->db->delete('bidders', array('id'=>$id));
+        $this->ApiModel->delete( array('id'=>$id,'bidders'));
 
        
 
-        $this->response(['BID deleted successfully.'], 200);
+        $this->response(['Bid deleted successfully.'],200);
 
     }
 

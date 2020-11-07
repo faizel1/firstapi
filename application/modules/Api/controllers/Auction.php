@@ -14,7 +14,7 @@ class Auction extends REST_Controller {
 
        parent::__construct();
 
-       $this->load->database();
+       $this->load->model('ApiModel');
 
     }
 
@@ -25,16 +25,17 @@ class Auction extends REST_Controller {
     {
         if(!is_null($id)){
 
-            $data = $this->db->get_where("auction", ['id' => $id])->row();
+            $data = $this->ApiModel->getonedata(['id' => $id],'auction');
+            
 
         }else{
 
-            $data = $this->db->get("auction")->result();
+            $data = $this->ApiModel->getdata("auction");
 
         }
 
      
-       $this->response($data, REST_Controller::HTTP_OK);
+       $this->response($data, 200);
 
 	}
 
@@ -46,11 +47,11 @@ class Auction extends REST_Controller {
 
         $input = $this->post();
 
-        $this->db->insert('auction',$input);
+        $this->ApiModel->adddata('auction',$input);
 
      
 
-        $this->response(['Auction created successfully.'], REST_Controller::HTTP_OK);
+        $this->response(['Auction created successfully.'], 200);
 
     } 
 
@@ -62,11 +63,11 @@ class Auction extends REST_Controller {
 
         $input = $this->put();
 
-        $this->db->update('auction', $input, array('id'=>$id));
+        $this->ApiModel->updatedata($input, array('id'=>$id),'auction');
 
      
 
-        $this->response(['Auction updated successfully.'], REST_Controller::HTTP_OK);
+        $this->response(['Auction updated successfully.'], 200);
 
     }
 
@@ -75,11 +76,11 @@ class Auction extends REST_Controller {
 
     {
 
-        $this->db->delete('auction', array('id'=>$id));
+        $this->ApiModel->delete( array('id'=>$id,'auction'));
 
        
 
-        $this->response(['Auction deleted successfully.'], REST_Controller::HTTP_OK);
+        $this->response(['Auction deleted successfully.'],200);
 
     }
 

@@ -14,7 +14,7 @@ class Home extends REST_Controller {
 
        parent::__construct();
 
-       $this->load->database();
+       $this->load->model('ApiModel');
 
     }
 
@@ -25,16 +25,16 @@ class Home extends REST_Controller {
     {
         if(!is_null($id)){
 
-            $data = $this->db->get_where("auction", ['id' => $id])->row();
+            $data = $this->ApiModel->getonedata( ['id' => $id],'auction')->row();
 
         }else{
 
-            $data = $this->db->get("auction")->result();
+            $data = $this->ApiModel->getdata("auction");
 
         }
 
      
-       $this->response($data, REST_Controller::HTTP_OK);
+       $this->response($data,200);
 
 	}
 

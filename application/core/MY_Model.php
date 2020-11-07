@@ -7,9 +7,7 @@ class MY_Model extends CI_Model {
     
     }
 
-    public function ech(){
-       echo 832974897348974839;
-    }
+
 
     public function getdata($table){
 
